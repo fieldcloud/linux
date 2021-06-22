@@ -101,6 +101,11 @@ int tpm_chip_start(struct tpm_chip *chip)
 {
 	int ret;
 
+	if (!chip->ops) {
+		pr_err("%s: Avoiding NULL ops pointer\n", __func__);
+		return -EIO;
+	}
+
 	tpm_clk_enable(chip);
 
 	if (chip->locality == -1) {

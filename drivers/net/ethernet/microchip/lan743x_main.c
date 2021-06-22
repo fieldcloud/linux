@@ -2318,6 +2318,11 @@ static int lan743x_rx_ring_init(struct lan743x_rx *rx)
 		ret = -EINVAL;
 		goto cleanup;
 	}
+	if (dma_set_mask_and_coherent(&rx->adapter->pdev->dev, DMA_BIT_MASK(64))) {
+		dev_warn(&rx->adapter->pdev->dev, "lan743x_: No suitable DMA available\n");
+		ret = -ENOMEM;
+		goto cleanup;
+	}
 	ring_allocation_size = ALIGN(rx->ring_size *
 				     sizeof(struct lan743x_rx_descriptor),
 				     PAGE_SIZE);

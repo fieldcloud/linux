@@ -5173,13 +5173,13 @@ static int r8169_mdio_register(struct rtl8169_private *tp)
 	tp->phydev = mdiobus_get_phy(new_bus, 0);
 	if (!tp->phydev) {
 		return -ENODEV;
-	} else if (!tp->phydev->drv) {
+	} else if (tp->phydev->phy_id != RTL_GIGA_MAC_NONE) {
 		/* Most chip versions fail with the genphy driver.
 		 * Therefore ensure that the dedicated PHY driver is loaded.
 		 */
-		dev_err(&pdev->dev, "no dedicated PHY driver found for PHY ID 0x%08x, maybe realtek.ko needs to be added to initramfs?\n",
+		dev_err(&pdev->dev, "no dedicated driver, but HW found: PHY PHY ID 0x%08x, maybe reloading of realtek.ko helps?\n",
 			tp->phydev->phy_id);
-		return -EUNATCH;
+		/* return -EUNATCH; */
 	}
 
 	/* PHY will be woken up in rtl_open() */
