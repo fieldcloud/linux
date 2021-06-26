@@ -28,7 +28,7 @@ enum ath10k_pci_reset_mode {
 	ATH10K_PCI_RESET_WARM_ONLY = 1,
 };
 
-static unsigned int ath10k_pci_irq_mode = ATH10K_PCI_IRQ_AUTO;
+static unsigned int ath10k_pci_irq_mode = ATH10K_PCI_IRQ_MSI;
 static unsigned int ath10k_pci_reset_mode = ATH10K_PCI_RESET_AUTO;
 
 module_param_named(irq_mode, ath10k_pci_irq_mode, uint, 0644);
